@@ -1,5 +1,6 @@
 using elshaday_test_api.Data;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace elshaday_test_api
 {
@@ -19,7 +20,9 @@ namespace elshaday_test_api
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddHealthChecks();
-
+            builder.Services.AddMvc()
+               .AddNewtonsoftJson(options => {
+                   options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; });
             var app = builder.Build();
 
             app.MapHealthChecks("/healthz");

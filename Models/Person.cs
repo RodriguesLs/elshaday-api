@@ -13,6 +13,6 @@
         public PersonType Type { get; set; }
         public string Document {  get; set; }
         public string Nickname { get; set; }
-        public List<Address> Addresses { get; set; }
+        public List<Address> Addresses { get; set; } = new List<Address>();
     }
 }
