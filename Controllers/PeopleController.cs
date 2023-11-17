@@ -1,4 +1,5 @@
-﻿using elshaday_test_api.Data;
+﻿using elshaday_test_api.Data.Repository;
+using elshaday_test_api.Data.Repository.Interfaces;
 using elshaday_test_api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,19 +10,29 @@ namespace elshaday_test_api.Controllers
     [Route("api/[controller]")]
     public class PeopleController : ControllerBase
     {
-        private readonly DataContext _dataContext;
-
-        public PeopleController(DataContext dataContext)
+        private readonly IPersonRepository personRepository;
+        public PeopleController(IPersonRepository personRepository)
         {
-            _dataContext = dataContext;
+            this.personRepository = personRepository;
         }
 
         [HttpGet]
         public async Task<ActionResult<List<Person>>> IndexAsync()
         {
-            var people = await _dataContext.People.Include(p => p.Addresses).ToListAsync();
+            return await personRepository.GetAllAsync();
+        }
 
-            return people;
+        [HttpPost]
+        public async Task<ActionResult<Person>> CreateAsync([FromBody] Person person)
+        {
+            try
+            {
+                await personRepository.Create(person);
+                return Ok(person);
+            } catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
     }
 }
