@@ -1,4 +1,7 @@
 using elshaday_test_api.Data;
+using elshaday_test_api.Data.Repository;
+using elshaday_test_api.Data.Repository.Interfaces;
+using elshaday_test_api.Services;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
@@ -10,11 +13,13 @@ namespace elshaday_test_api
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // builder.Services.AddTransient<TokenService>();
             // Add services to the container.
 
             builder.Services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+            
+            builder.Services.AddCors();
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -23,6 +28,12 @@ namespace elshaday_test_api
             builder.Services.AddMvc()
                .AddNewtonsoftJson(options => {
                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; });
+
+            builder.Services.AddScoped<IPersonRepository, PersonRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<ITokenService, TokenService>();
+
+
             var app = builder.Build();
 
             app.MapHealthChecks("/healthz");
@@ -35,8 +46,12 @@ namespace elshaday_test_api
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            app.UseCors(x => x
+            .AllowAnyHeader()
+            .AllowAnyOrigin()
+            .AllowAnyMethod());
 
+            app.UseAuthorization();
 
             app.MapControllers();
 
