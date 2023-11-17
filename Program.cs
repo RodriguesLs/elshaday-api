@@ -1,4 +1,5 @@
 using elshaday_test_api.Data;
+using elshaday_test_api.Data.Map;
 using elshaday_test_api.Data.Repository;
 using elshaday_test_api.Data.Repository.Interfaces;
 using elshaday_test_api.Services;
@@ -29,8 +30,15 @@ namespace elshaday_test_api
                .AddNewtonsoftJson(options => {
                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; });
 
+            builder.Services.AddAutoMapper(
+                typeof(NewPersonMap),
+                typeof(NewDepartmentMap),
+                typeof(NewUserMap),
+                typeof(NewDepartmentMap)
+            );
             builder.Services.AddScoped<IPersonRepository, PersonRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             builder.Services.AddScoped<ITokenService, TokenService>();
 
 
