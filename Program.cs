@@ -2,9 +2,13 @@ using elshaday_test_api.Data;
 using elshaday_test_api.Data.Map;
 using elshaday_test_api.Data.Repository;
 using elshaday_test_api.Data.Repository.Interfaces;
+using elshaday_test_api.Integration;
+using elshaday_test_api.Integration.Interfaces;
+using elshaday_test_api.Integration.Refit;
 using elshaday_test_api.Services;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Refit;
 
 namespace elshaday_test_api
 {
@@ -36,11 +40,17 @@ namespace elshaday_test_api
                 typeof(NewUserMap),
                 typeof(NewDepartmentMap)
             );
+
             builder.Services.AddScoped<IPersonRepository, PersonRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             builder.Services.AddScoped<ITokenService, TokenService>();
 
+            builder.Services.AddScoped<IViaCepIntegration, ViaCepIntegration>();
+            builder.Services.AddRefitClient<IViaCepIntegrationRefit>().ConfigureHttpClient(c =>
+            {
+                c.BaseAddress = new Uri("https://viacep.com.br");
+            });
 
             var app = builder.Build();
 
