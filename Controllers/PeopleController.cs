@@ -1,6 +1,7 @@
 ﻿using elshaday_test_api.Data.Repository;
 using elshaday_test_api.Data.Repository.Interfaces;
 using elshaday_test_api.Models;
+using elshaday_test_api.ModelViews;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,7 +24,7 @@ namespace elshaday_test_api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Person>> CreateAsync([FromBody] Person person)
+        public async Task<ActionResult<Person>> CreateAsync([FromBody] NewPerson person)
         {
             try
             {
@@ -31,7 +32,7 @@ namespace elshaday_test_api.Controllers
                 return Ok(person);
             } catch (Exception ex)
             {
-                return BadRequest(ex);
+                return BadRequest(ex.Message);
             }
         }
     }

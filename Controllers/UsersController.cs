@@ -4,6 +4,7 @@ using elshaday_test_api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cors;
+using elshaday_test_api.ModelViews;
 
 namespace elshaday_test_api.Controllers
 {
@@ -18,13 +19,13 @@ namespace elshaday_test_api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<User>>> GetAllAsync()
+        public async Task<ActionResult<List<User>>> IndexAsync()
         {
             return await _userRepository.GetAllAsync();
         }
 
         [HttpPost]
-        public async Task<ActionResult<User>> CreateAsync(User user)
+        public async Task<ActionResult<User>> CreateAsync(NewUser user)
         {
             await _userRepository.Register(user);
             return Ok(user);
