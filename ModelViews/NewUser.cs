@@ -1,15 +1,12 @@
 ﻿using elshaday_test_api.Models.Enumerables;
 
-namespace elshaday_test_api.Models
+namespace elshaday_test_api.ModelViews
 {
-    public class User
-    {   
-        public int Id { get; set; }
+    public class NewUser
+    {
         public string Username { get; set; }
         public string Email { get; set; }
         public string PasswordHash { get; set; }
         public AdminRole Role { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using elshaday_test_api.Data;
 
@@ -11,9 +12,10 @@ using elshaday_test_api.Data;
 namespace elshaday_test_api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20231117045851_IncludeTimestampToAllClasses")]
+    partial class IncludeTimestampToAllClasses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,7 +40,7 @@ namespace elshaday_test_api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Neighborhood")
@@ -60,7 +62,7 @@ namespace elshaday_test_api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime>("UpdateAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -110,7 +112,7 @@ namespace elshaday_test_api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Document")
@@ -130,7 +132,7 @@ namespace elshaday_test_api.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime>("UpdateAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -146,7 +148,7 @@ namespace elshaday_test_api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -160,7 +162,7 @@ namespace elshaday_test_api.Migrations
                     b.Property<int>("Role")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime>("UpdateAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Username")
