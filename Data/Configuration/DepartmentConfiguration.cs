@@ -9,9 +9,10 @@ namespace elshaday_test_api.Data.Configuration
         public void Configure(EntityTypeBuilder<Department> builder)
         {
             builder
-                .HasOne(d => d.Person)
-                .WithMany(p => p.Departments);
+                .HasOne(d => d.Person);
+                // .WithMany(p => p.Departments);
                 // .HasForeignKey<Department>(d => d.PersonId);
+           // builder.Property(d => d.PersonName)
         }
     }
 }

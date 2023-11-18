@@ -14,6 +14,7 @@ namespace elshaday_test_api.Data.Configuration
             builder.Property(x => x.Nickname);
 
             builder.HasMany(p => p.Addresses).WithOne(d => d.Person);
+            builder.HasMany(p => p.Departments).WithOne(d => d.Person);
         }
     }
 }
