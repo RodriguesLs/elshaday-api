@@ -31,6 +31,12 @@ namespace elshaday_test_api.Controllers
             return Ok(user);
         }
 
+        [HttpPut("{id}")]
+        public async Task<ActionResult<bool>> InactiveUserAsync(int id)
+        {
+            return Ok(await _userRepository.InactiveUser(id));
+        }
+
         [AllowAnonymous]
         [HttpPost("authenticate")]
         public async Task<ActionResult> Authenticate([FromBody] User user)

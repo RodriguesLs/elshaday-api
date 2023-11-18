@@ -9,6 +9,6 @@ namespace elshaday_test_api.Data.Repository.Interfaces
         public Task<List<User>> GetAllAsync();
         public Task<User> Register(NewUser user);
         public Task<User> Authenticate(User user);
-        
+        public Task<bool> InactiveUser(int id);
     }
 }

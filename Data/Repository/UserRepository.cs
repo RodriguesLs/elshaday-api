@@ -19,11 +19,19 @@ namespace elshaday_test_api.Data.Repository
 
         public async Task<List<User>> GetAllAsync()
         {
-            return await _dbContext.Users.ToListAsync();
+            var users = await _dbContext.Users.ToListAsync();
+
+            return users.FindAll(u => u.Active);
         }
 
         public async Task<User> Register(NewUser newUser)
         {
+            var userFound = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == newUser.Email);
+
+            if (userFound != null) {
+                throw new Exception("Email duplicado, tente outro.");
+            }
+
             var user = _mapper.Map<User>(newUser);
 
             await _dbContext.Users.AddAsync(user);
@@ -37,6 +45,18 @@ namespace elshaday_test_api.Data.Repository
             var userFound = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
 
             return userFound;
+        }
+
+        public async Task<bool> InactiveUser(int id)
+        {
+            var user = await _dbContext.Users.FindAsync(id);
+
+            user.Active = false;
+
+            _dbContext.Users.Update(user);
+            await _dbContext.SaveChangesAsync();
+
+            return true;
         }
     }
 }
