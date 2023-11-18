@@ -62,6 +62,7 @@ namespace elshaday_test_api
                 app.UseSwaggerUI();
             }
 
+            app.UseExceptionHandler("/error");
             app.UseHttpsRedirection();
 
             app.UseCors(x => x
